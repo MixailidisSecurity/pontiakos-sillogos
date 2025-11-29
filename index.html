@@ -1,292 +1,121 @@
-// pages/index.js
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
-
-export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const slides = [
-    {
-      image: "/images/slide1.jpg",
-      title: "Ποντιακός Σύλλογος Βίγλα-Άρτας",
-      subtitle: "ΟΙ ΠΡΟΣΦΥΓΕΣ - Ιστορία & Παράδοση"
-    },
-    {
-      image: "/images/slide2.jpg", 
-      title: "Μαρτυρίες Προσφύγων",
-      subtitle: "Από τον Πόντο στη Βίγλα Άρτας"
-    },
-    {
-      image: "/images/slide3.jpg",
-      title: "Ποντιακοί Χοροί & Παράδοση",
-      subtitle: "Διατήρηση του Πολιτισμού μας"
-    }
-  ];
-
-  const menuItems = [
-    { name: "ΑΡΧΙΚΗ", href: "#" },
-    { name: "Ο ΣΥΛΛΟΓΟΣ", href: "#about" },
-    { name: "ΙΣΤΟΡΙΑ", href: "#history" },
-    { name: "ΜΑΡΤΥΡΙΕΣ", href: "#stories" },
-    { name: "ΓΑΛΛΕΡΥ", href: "#gallery" },
-    { name: "ΒΙΝΤΕΟ", href: "#video" },
-    { name: "ΕΠΙΚΟΙΝΩΝΙΑ", href: "#contact" }
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-white">
-      <Head>
-        <title>Ποντιακός Σύλλογος Βίγλα-Άρτας - ΟΙ ΠΡΟΣΦΥΓΕΣ</title>
-        <meta name="description" content="Επίσημη ιστοσελίδα Ποντιακού Συλλόγου Βίγλα-Άρτας ΟΙ ΠΡΟΣΦΥΓΕΣ" />
-      </Head>
-
-      {/* Top Bar - Κοκκινό Πάνω Μπάρες */}
-      <div className="bg-red-800 text-white py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
-          <div>Ποντιακός Σύλλογος Βίγλα-Άρτας "ΟΙ ΠΡΟΣΦΥΓΕΣ"</div>
-          <div>Ιδρύθηκε το 1982</div>
-        </div>
-      </div>
-
-      {/* Κύρια Επικεφαλίδα με Λογότυπο */}
-      <header className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            {/* Λογότυπο */}
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-red-800 rounded-full flex items-center justify-center text-white font-bold text-sm text-center">
-                ΠΣ ΒΙΓΛΑΣ
-              </div>
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900">ΠΟΝΤΙΑΚΟΣ ΣΥΛΛΟΓΟΣ</h1>
-                <p className="text-lg text-red-800 font-semibold">ΒΙΓΛΑ-ΑΡΤΑΣ</p>
-                <p className="text-sm text-gray-600">"ΟΙ ΠΡΟΣΦΥΓΕΣ"</p>
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden text-gray-700"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              ☰
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Κύριο Μενού */}
-      <nav className="bg-red-700 text-white sticky top-0 z-50">
-        <div className="container mx-auto px-4">
-          <div className={`${isMenuOpen ? 'block' : 'hidden'} md:flex justify-center`}>
-            {menuItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="block py-4 px-6 hover:bg-red-800 transition-colors duration-300 font-semibold text-sm uppercase border-r border-red-600 last:border-r-0"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        </div>
-      </nav>
-
-      {/* Slideshow */}
-      <section className="relative h-96 bg-gray-200 overflow-hidden">
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-black/30"></div>
-            <div className="absolute inset-0 flex items-center justify-center text-center text-white">
-              <div>
-                <h2 className="text-4xl font-bold mb-4">{slide.title}</h2>
-                <p className="text-xl">{slide.subtitle}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Οι Πρόσφυγες - Ποντιακός Σύλλογος Βίγλας Άρτας</title>
+    <style>
+        body {
+            background-color: #fff9c4; /* Φωτεινό κίτρινο */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
         
-        {/* Slide Indicators */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide ? 'bg-white' : 'bg-white/50'
-              }`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Κύριο Περιεχόμενο */}
-      <main className="container mx-auto px-4 py-8">
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
         
-        {/* Πλαίσιο Ενημερώσεων */}
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-8">
-          <div className="flex">
-            <span className="bg-red-700 text-white px-3 py-1 font-bold mr-4">ΝΕΑ</span>
-            <div className="flex-1">
-              <span className="text-gray-700">Καλωσορίσατε στην επίσημη ιστοσελίδα του Ποντιακού Συλλόγου Βίγλα-Άρτας "ΟΙ ΠΡΟΣΦΥΓΕΣ"</span>
-            </div>
-          </div>
+        header {
+            background-color: #fbc02d; /* Πιο έντονο κίτρινο */
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #f57f17;
+        }
+        
+        h1 {
+            color: #5d4037;
+            margin: 0;
+        }
+        
+        .subtitle {
+            color: #795548;
+            font-style: italic;
+        }
+        
+        .info-section {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .contact-btn {
+            background-color: #f57f17;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .contact-btn:hover {
+            background-color: #e65100;
+        }
+        
+        .map-container {
+            margin: 20px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fbc02d;
+            margin-top: 30px;
+            color: #5d4037;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ΟΙ ΠΡΟΣΦΥΓΕΣ</h1>
+            <p class="subtitle">Ποντιακός Σύλλογος Βίγλας Άρτας</p>
+            <p>Ιδρύθηκε το 1982</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="info-section">
+            <h2>Σχετικά με το Σύλλογο</h2>
+            <p>Ο Ποντιακός Σύλλογος "Οι Πρόσφυγες" Βίγλας Άρτας ιδρύθηκε το 1982 στο προσφυγικό χωριό Βίγλα Άρτας, με στόχο τη διατήρηση και διάδοση του ποντιακού πολιτισμού.</p>
         </div>
 
-        {/* Πλαίσια με Πληροφορίες */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {/* Σύλλογος */}
-          <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-            <div className="bg-red-800 text-white py-3 px-4">
-              <h3 className="font-bold text-lg text-center">Ο ΣΥΛΛΟΓΟΣ ΜΑΣ</h3>
+        <div class="info-section">
+            <h2>Επικοινωνία</h2>
+            <div class="contact-links">
+                <a href="mailto:oiprosfyges@gmail.com" class="contact-btn">📧 Email</a>
+                <a href="https://www.facebook.com/share/17eYhuMciN/?mibextid=wwXIfr" target="_blank" class="contact-btn">📘 Facebook</a>
+                <a href="https://www.instagram.com/oi_prosfiges_pontiakos_s_vigla?igsh=MWo1ZzZnZW8xdnNpcw%3D%3D&utm_source=qr" target="_blank" class="contact-btn">📷 Instagram</a>
             </div>
-            <div className="p-4">
-              <p className="text-gray-700 mb-4">
-                Ο Ποντιακός Σύλλογος Βίγλας "ΟΙ ΠΡΟΣΦΥΓΕΣ" ιδρύθηκε το 1982 στο προσφυγικό χωριό Βίγλα Άρτας.
-              </p>
-              <a href="#about" className="text-red-700 font-semibold hover:text-red-800">
-                Διαβάστε περισσότερα →
-              </a>
-            </div>
-          </div>
-
-          {/* Ιστορία */}
-          <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-            <div className="bg-red-800 text-white py-3 px-4">
-              <h3 className="font-bold text-lg text-center">Η ΙΣΤΟΡΙΑ ΜΑΣ</h3>
-            </div>
-            <div className="p-4">
-              <p className="text-gray-700 mb-4">
-                Από τον Πόντο στον Καύκασο, στο Καζακστάν και τελικά στη Νέα Βίγλα Άρτας. Η οδύσσεια των προσφύγων.
-              </p>
-              <a href="#history" className="text-red-700 font-semibold hover:text-red-800">
-                Διαβάστε περισσότερα →
-              </a>
-            </div>
-          </div>
-
-          {/* Επικοινωνία */}
-          <div className="bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-            <div className="bg-red-800 text-white py-3 px-4">
-              <h3 className="font-bold text-lg text-center">ΕΠΙΚΟΙΝΩΝΙΑ</h3>
-            </div>
-            <div className="p-4">
-              <p className="text-gray-700 mb-2">📞 Τηλέφωνο: ...</p>
-              <p className="text-gray-700 mb-2">📧 Email: ...</p>
-              <p className="text-gray-700">📍 Βίγλα Άρτας</p>
-            </div>
-          </div>
         </div>
 
-        {/* Μαρτυρίες Προσφύγων */}
-        <section id="stories" className="mb-12">
-          <div className="bg-red-800 text-white py-3 px-4 mb-6">
-            <h2 className="text-2xl font-bold text-center">ΜΑΡΤΥΡΙΕΣ ΠΡΟΣΦΥΓΩΝ</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Μαρτυρία 1 */}
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-800 mb-3">Ο Ανέστης Παυλίδης</h3>
-              <p className="text-gray-700 mb-4">
-                "Ήμουν 19 χρονών νέος, όταν φτάσαμε εδώ. Ήταν δύσκολα, ο τόπος ένας βάλτος, φτώχεια ήταν, χάλια, δράμα..."
-              </p>
-              <button className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded transition-colors duration-300">
-                ΟΛΗ Η ΙΣΤΟΡΙΑ
-              </button>
+        <div class="info-section">
+            <h2>Τοποθεσία</h2>
+            <p>Επισκεφτείτε το σύλλογό μας στη Βίγλα Άρτας:</p>
+            <div class="map-container">
+                <a href="https://maps.app.goo.gl/F1wvgxxx64pLNF8w8?g_st=ipc" target="_blank" class="contact-btn">
+                    🗺️ Ανοίξτε στο Google Maps
+                </a>
             </div>
-
-            {/* Μαρτυρία 2 */}
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-800 mb-3">Η Κυριακή Δημητριάδη</h3>
-              <p className="text-gray-700 mb-4">
-                "Έκαψαν τη μητέρα του. Τους έκαψαν ζωντανούς... Ο πατέρας μου γλίτωσε από θαύμα..."
-              </p>
-              <button className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded transition-colors duration-300">
-                ΟΛΗ Η ΙΣΤΟΡΙΑ
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Φωτογραφίες */}
-        <section id="gallery" className="mb-12">
-          <div className="bg-red-800 text-white py-3 px-4 mb-6">
-            <h2 className="text-2xl font-bold text-center">ΦΩΤΟΓΡΑΦΙΕΣ</h2>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={item} className="bg-gray-200 h-40 rounded-lg flex items-center justify-center">
-                <span className="text-gray-500">Φωτογραφία {item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Βίντεο */}
-        <section id="video" className="mb-12">
-          <div className="bg-red-800 text-white py-3 px-4 mb-6">
-            <h2 className="text-2xl font-bold text-center">ΒΙΝΤΕΟ</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500">YouTube Video 1</span>
-            </div>
-            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500">YouTube Video 2</span>
-            </div>
-          </div>
-        </section>
-
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-bold mb-4">ΠΟΝΤΙΑΚΟΣ ΣΥΛΛΟΓΟΣ</h3>
-              <p>Βίγλα-Άρτας "ΟΙ ΠΡΟΣΦΥΓΕΣ"</p>
-              <p>Ιδρύθηκε το 1982</p>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-bold mb-4">ΕΠΙΚΟΙΝΩΝΙΑ</h3>
-              <p>📞 Τηλέφωνο: ...</p>
-              <p>📧 Email: ...</p>
-              <p>📍 Βίγλα Άρτας</p>
-            </div>
-            
-            <div>
-              <h3 className="text-lg font-bold mb-4">ΑΝΑΡΤΗΣΕΙΣ</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-red-300">Νέα & Ανακοινώσεις</a></li>
-                <li><a href="#" className="hover:text-red-300">Εκδηλώσεις</a></li>
-                <li><a href="#" className="hover:text-red-300">Προγράμματα</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-8 pt-6 text-center">
-            <p>&copy; 2024 Ποντιακός Σύλλογος Βίγλα-Άρτας "ΟΙ ΠΡΟΣΦΥΓΕΣ". Με την επιφύλαξη παντός δικαιώματος.</p>
-          </div>
         </div>
-      </footer>
     </div>
-  );
-}
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Οι Πρόσφυγες - Ποντιακός Σύλλογος Βίγλας Άρτας</p>
+        </div>
+    </footer>
+</body>
+</html>
